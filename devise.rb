@@ -103,15 +103,15 @@ environment generators
 # AFTER BUNDLE
 ########################################
 after_bundle do
-  # Generators: db + simple form + pages controller
+  # Generators: db + simple form + preferences controller
   ########################################
   rails_command 'db:drop db:create db:migrate'
   generate('simple_form:install', '--bootstrap')
-  generate(:controller, 'pages', 'home', '--skip-routes', '--no-test-framework')
+  generate(:controller, 'preferences', 'home', '--skip-routes', '--no-test-framework')
 
   # Routes
   ########################################
-  route "root to: 'pages#home'"
+  route "root to: 'preferences#home'"
 
   # Git ignore
   ########################################
@@ -144,9 +144,9 @@ after_bundle do
 
   # Pages Controller
   ########################################
-  run 'rm app/controllers/pages_controller.rb'
-  file 'app/controllers/pages_controller.rb', <<~RUBY
-    class PagesController < ApplicationController
+  run 'rm app/controllers/preferences_controller.rb'
+  file 'app/controllers/preferences_controller.rb', <<~RUBY
+    class PreferencesController < ApplicationController
       skip_before_action :authenticate_user!, only: [ :home ]
 
       def home
@@ -209,7 +209,7 @@ after_bundle do
   # Git
   ########################################
   git add: '.'
-  git commit: "-m 'Initial commit with devise template from https://github.com/lewagon/rails-templates'"
+  git commit: "-m 'Rails new with devise template'"
 
   # Fix puma config
   gsub_file('config/puma.rb', 'pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }', '# pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }')
